@@ -1,0 +1,57 @@
+﻿<div>
+    <div style="text-align:center;">
+        <p-selectButton [options]="navs" (onChange)="chanageRouter($event)" [(ngModel)]="curr_url"></p-selectButton>
+        <hr />
+    </div>
+    <div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th style="width:60px;">置顶</th>
+                    <th style="width:160px;">应用名称</th>
+                    <th style="width:160px;">APPID</th>
+                    <th style="width:160px;">BUNDLEID</th>
+                    <th style="width:160px;">添加时间</th>
+                    <th style="width:160px;">最后获取任务时间</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf="items">
+                <tr *ngFor="let app of items let index=index" (dblclick)="task(app)"  style="cursor:pointer;">
+                    <td style="width:20px;">
+                    <button class="btn" *ngIf="app.ishot == 0" (click)="setHot(app)">置顶</button>
+                    <button  class="btn btn-primary" *ngIf="app.ishot == 1" (click)="cancelHot(app)" >取消</button></td>
+                    <td style="width:160px;"> {{app.appname}}</td>
+                    <td>{{app.appid}}</td>
+                    <td>{{app.bundleid}}</td>
+                    <td>{{app.add_date}}</td>
+                    <td>{{app.last_get_time}}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="addtask(app)" routerLinkActive="active">添加任务</button>
+                       
+                        &nbsp;<button class="btn" (click)="del(index,app)">删除</button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="console" [style.height]="(consoleHeight)+'%'">
+    <div class="nav">
+        <ul>
+            <li *ngIf="curr_app">{{curr_app.appname}}</li>
+            <li class="pull-right">
+                <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
+                <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
+                <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
+                <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>
+            </li>
+        </ul>
+    </div>
+        <div class="console-content">
+            <router-outlet></router-outlet>
+            <div style="clear:both;"></div>
+        </div>
+    </div>

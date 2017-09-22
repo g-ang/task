@@ -1,0 +1,29 @@
+﻿<div class="container">
+   
+    <div class="form-group">
+            <p-multiSelect [options]="fields" displaySelectedLabel="true" filter="false" maxSelectedLabels="20" defaultLabel="请选择要导入的字段" [(ngModel)]="selectedFields"></p-multiSelect>
+        <div class="alert alert-warning">
+            请对应导入数据的顺序，没有导入的字段会自动生成
+        </div>
+    </div>
+    <div class="form-group">
+        <div *ngIf="types">
+            <select [(ngModel)]="account_type" class="form-control">
+                <option [ngValue]="-1" selected>---请选择设备类型---</option>
+                <option *ngFor="let type of types" [ngValue]="type.id">{{type.title}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" style="height:35px;overflow:hidden;">
+        <p-fileUpload #fubauto mode="basic" [files]="[]" name="file" auto="true" [url]="upload_dir" accept="text/*" chooseLabel="选择要导入的文件" (onUpload)="onUpload($event)" [disabled]="disabledUpload" (onProgress)="onProgress($event)"></p-fileUpload>
+        <p *ngIf="progress">上传{{progress}}%</p>
+    </div>
+
+    <div class="form-group">
+        <textarea [(ngModel)]="remarks" placeholder="备注说明" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" (click)="save()">保存</button>
+    </div>
+    </div>

@@ -1,0 +1,19 @@
+.logs{
+    height:50%;
+    overflow-y:auto; 
+    position:fixed;
+    bottom:0px;width:100%;
+    left:0px;
+    background-color:#f6f6f6;
+    z-index:3000;
+    background-color:#FFFFE0;
+    padding:16px;
+    border-top:2px solid #dfdfdf;
+    text-align:right;
+}
+.logs-btn{
+    bottom:6px;
+    right:16px;
+    position:fixed;
+    z-index:3001;
+}

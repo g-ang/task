@@ -1,0 +1,37 @@
+﻿
+    <div class="col-md-5">
+        <div class="list-height">
+            <table *ngIf="items" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">所有关键字</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items let index=index">
+                        <td>{{item.name}}</td>
+                        <td><button class="btn" (click)="add(index)" >选择</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="list-height">
+            <table *ngIf="selecteds" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="3">已选中的关键字</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of selecteds let index=index">
+                        <td>{{item.name}}</td>
+                        <td style="width:100px;"><input type="number" class="form-control" [(ngModel)]="item.quant" /></td>
+                        <td><button class="btn btn-primary" (click)="cancel(index)">取消</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>

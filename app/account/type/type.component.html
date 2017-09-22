@@ -1,0 +1,4 @@
+﻿<select class="form-control" [(ngModel)]="selected" (change)="change()" name="account_type">
+    <option [ngValue]="-1" selected>---请选导入帐号状态---</option>
+    <option *ngFor="let type of types" [ngValue]="type.id">{{type.title}}</option>
+</select>

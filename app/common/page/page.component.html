@@ -1,0 +1,76 @@
+﻿<style>
+    .pages li {
+        padding: 2px 8px;
+        margin: 0px 2px;
+        list-style-type: none;
+        float: left;
+    }
+
+    ul, div, menu {
+        -webkit-padding-start: 0px;
+    }
+
+    .pagebox {
+        line-height: 24px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .pages li {
+        background: #f4f4f4;
+    }
+
+        .pages li.txt {
+            background: #f2f2f2;
+            border: 0px;
+        }
+
+        .pages li.act {
+            background: #dfdfdf;
+        }
+
+    .pages .reload {
+        background-color: #f4f4f4;
+    }
+</style>
+<div *ngIf="mod=='def'" class="pagebox">
+    <ul class="pages">
+        <li class="txt">{{page}}/{{pagetotal}} total:{{total}}</li>
+        <li class="next" [ngSwitch]="pagetotal>0 && page>1">
+            <a *ngSwitchCase="true" href="javascript:void(0)" (click)="first()">第一页</a>
+            <span *ngSwitchCase="false">第一页</span>
+        </li>
+
+        <li class="previous">
+            <a *ngIf="!previousOff" href="javascript:void(0)" (click)="previous()">上一页</a>
+            <span *ngIf="previousOff">上一页</span>
+        </li>
+
+        <li class="next">
+            <a *ngIf="!nextOff" href="javascript:void(0)" (click)="next()">下一页</a>
+            <span *ngIf="nextOff">下一页</span>
+        </li>
+        <li class="next" [ngSwitch]="pagetotal>0 && page!=pagetotal">
+            <a *ngSwitchCase="true" href="javascript:void(0)" (click)="last()">最后一页</a>
+            <span *ngSwitchCase="false">最后一页</span>
+        </li>
+        <li class="reload"><a href="javascript:void(0);" (click)="reload()">刷新</a></li>
+    </ul>
+</div>
+
+<div *ngIf="mod=='min'" class="pagebox">
+
+    <ul class="pages">
+        <li class="txt">{{page}}/{{pagetotal}}</li>
+        <li class="previous">
+            <a *ngIf="!previousOff" href="javascript:void(0)" (click)="previous()">上一页</a>
+            <span *ngIf="previousOff">上一页</span>
+        </li>
+        <li class="next">
+            <a *ngIf="!nextOff" href="javascript:void(0)" (click)="next()">下一页</a>
+            <span *ngIf="nextOff">下一页</span>
+        </li>
+        <li class="reload"><a href="javascript:void(0);" (click)="reload()">刷新</a></li>
+    </ul>
+
+</div>

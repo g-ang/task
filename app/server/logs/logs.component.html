@@ -1,0 +1,11 @@
+﻿<div >
+    <button class="btn btn-default logs-btn" (click)="click()">{{buttonName}}</button>
+    <div [hidden]="hidden" class="logs">
+        <h5>{{title}}</h5>
+        <hr />
+        <div *ngIf="data">
+            <p *ngFor="let log of data">{{log|logformat}}</p>
+        </div>
+            <p style="height:64px;">&nbsp;</p>
+    </div>
+</div>

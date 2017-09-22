@@ -1,0 +1,97 @@
+﻿<div *ngIf="appinfo_id>0">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button class="btn btn-primary" (click)="save()" [disabled]="onSaveDisabled">保存</button>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="list-height"><app-keyword [appinfo_id]="appinfo_id" [selecteds]="keywords"></app-keyword></div>
+    </div>
+    <div class="col-md-4" style="padding:0px;margin:0px;">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label>任务名称</label>
+                <input type="text" class="form-control" [(ngModel)]="task_name" name="task_name" placeholder="任务名称" />
+            </div>
+
+            <div class="form-group">
+                <label>账号类型</label>
+                <account-type [(ngModel)]="account_type"></account-type>
+            </div>
+
+            <div class="form-group">
+                <label>运行顺序</label>
+                <input type="number" [(ngModel)]="sort" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-5">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>今天运行时间</th>
+                        <th>
+                            <input [(ngModel)]="addruntime" class="form-control" (keyup)="addRunTime($event,'today')" placeholder="如:16.30" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="todays">
+                    <tr *ngFor="let t of todays let index=index">
+                        <td>{{t}} </td>
+                        <td><a href="javascript:void(0);" (click)="delToday(index)">删除</a></td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th style="width:120px;">明天运行时间</th>
+                        <th>
+                            <input [(ngModel)]="addruntime" class="form-control" (keyup)="addRunTime($event,'tomorrow')" placeholder="如:16.30" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="tomorrows">
+                    <tr *ngFor="let t of tomorrows let index=index">
+                        <td>{{t}}</td>
+                        <td><a href="javascript:void(0);" (click)="delTomrrow(index)">删除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <p-inputSwitch onLabel="允许所有客户端" offLabel="不允许" [(ngModel)]="isAllClient" (onChange)="changeClientSw()"></p-inputSwitch>
+            <div *ngIf="isAllClient == false">
+                <div class="col-md-6">
+                    <div class="list-height">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr><th colspan="2">所有客户端</th></tr>
+                            </thead>
+                            <tr *ngFor="let c of clients let index=index">
+                                <td>{{c.name}}</td>
+                                <td><button class="btn btn-primary" (click)="addClient(index)">添加</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="list-height">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr><th colspan="2">已选择的客户端</th></tr>
+                            </thead>
+                            <tr *ngFor="let c of selectedClients let index=index">
+                                <td>{{c.name}}</td>
+                                <td><button class="btn btn-primary" (click)="cancelClient(index)">取消</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

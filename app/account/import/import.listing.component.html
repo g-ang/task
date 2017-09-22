@@ -1,0 +1,45 @@
+﻿<div>
+   
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th colspan="2"><p-selectButton [options]="navs" (onChange)="chanageAct($event)" [(ngModel)]="act"></p-selectButton></th>
+                <th>状态</th>
+                <th>类型</th>
+                <th>帐号状态</th>
+                
+                <th *ngIf="act!='INSERT_DEVICE'">绑定设备配置</th>
+                
+                <th>操作的字段</th>
+                <th>保存时间</th>
+                <th>备注</th>
+          
+             
+            </tr>
+        </thead>
+        <tbody *ngIf="types && items">
+            <tr *ngFor="let item of items">
+                <td style="width:60px;"><button class="btn btn-default" href="javascript:void(0);" (click)="import(item)" [disabled]="item.status>0">导入</button></td>
+                <td>{{item.filename}}</td>
+                <td ><button disabled class="btn btn-sm" [class.btn-success]="item.status==1" [class.btn-warning]="item.status==2" [class.btn-info]="item.status==3">{{status_txt[item.status]}}</button> </td>
+                <td>{{item.account_type | typeSwitch:types}}</td>
+                <td>{{item.account_status | typeSwitch:importStatus}}</td>
+               
+                <td *ngIf="act!='INSERT_DEVICE'">
+                    <p *ngIf="item.device_config.isBind && device_types">
+                        绑定类型:{{item.device_config.type_id| typeSwitch:device_types}},
+                        开始位置:{{item.device_config.start}},
+                        结束位置:{{item.device_config.end}}
+                    </p>
+                </td>
+            
+                <td [innerHTML]="item.fields | join:item.sep"></td>
+                <td>{{item.addtime}}</td>
+                <td >{{item.remarks}}</td>
+               
+               
+            </tr>
+        </tbody>
+    </table>
+    <logs [data]="logs" title="导入日志" [hidden]="logsHidden"></logs> 
+</div>

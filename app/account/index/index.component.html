@@ -1,0 +1,32 @@
+﻿<div >
+    <table class="table table-striped table-hover" style="text-align:right;">
+        <thead>
+            <tr>
+                <th style="text-align:right;width:30px; ">ID</th>
+                <th style="text-align:right;width:160px;">类型名称</th>
+                <th style="text-align:right;width:120px;">帐号总数</th>
+                <th style="text-align:right;width:120px;">正常帐号</th>
+                <th style="text-align:right;width:120px;">被锁帐号</th>
+                <th style="text-align:right;width:120px;">密码错误</th>
+                <th style="text-align:right;width:120px;">缓存总数/未绑定</th>
+                <th style="text-align:right;width:120px;" ></th>
+                <th style="text-align:right;"></th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="types && counts">
+            <tr *ngFor="let t of types">
+                <td>{{t.id}}</td>
+                <td>{{t.title}}</td>
+                <td>{{counts[t.id]['total']}}</td>
+                <td>{{counts[t.id]['2']}}</td>
+                <td>{{counts[t.id]['4']}}</td>
+                <td>{{counts[t.id]['5']}}</td>
+                <td>{{counts[t.id]['cache_total']}}/{{counts[t.id]['unbind_total']}}</td>
+                <td><button (click)="upCache(t.id)" class="btn">更新缓存</button></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<logs [data]="logs" [hidden]="true" ></logs>

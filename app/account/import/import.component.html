@@ -1,0 +1,62 @@
+﻿      <div class="container">
+            <div class="form-group">
+                <p-multiSelect [options]="fields" displaySelectedLabel="true" filter="false" maxSelectedLabels="20" defaultLabel="请选择要导入的字段" [(ngModel)]="selectedFields"></p-multiSelect>
+            </div>
+            <div class="form-group">
+                <div *ngIf="types">
+                    <select [(ngModel)]="account_type" class="form-control">
+                        <option [ngValue]="-1" selected>---请选择帐号类型---</option>
+                        <option *ngFor="let type of types" [ngValue]="type.id">{{type.title}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <select class="form-control" [(ngModel)]="account_status" name="account_status">
+                        <option [ngValue]="-1" selected>---请选导入帐号状态---</option>
+                        <option *ngFor="let type of importStatus" [ngValue]="type.id">{{type.title}}</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group" style="height:35px;overflow:hidden;">
+                <p-fileUpload #fubauto mode="basic" [files]="[]" name="file" auto="true" [url]="upload_dir" accept="text/*" chooseLabel="选择要导入的文件" (onUpload)="onUpload($event)" [disabled]="disabledUpload" (onProgress)="onProgress($event)"></p-fileUpload>
+                <p *ngIf="progress">上传{{progress}}%</p>
+            </div>
+
+
+            <div class="form-group">
+                <p-checkbox label="绑定设备信息" binary="true" [value]="true" [(ngModel)]="device_config.isBind" styleClass="ui-state-default ui-chkbox ui-widget-header"></p-checkbox>
+                <div *ngIf="device_config.isBind">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>设备类型</label>
+                            <select class="form-control" [(ngModel)]="device_config.type_id">
+                                <option [ngValue]="-1" selected>---请选择---</option>
+                                <option *ngFor="let type of  device_types" [ngValue]="type.id">{{type.title}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>开始位置</label>
+                            <input class="form-control" type="number" [(ngModel)]="device_config.start" placeholder="开始位置" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>结束位置</label>
+                            <input class="form-control" type="number" [(ngModel)]="device_config.end" placeholder="结束位置" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="save()" >保存</button>
+            </div>
+        </div>

@@ -1,0 +1,54 @@
+﻿<div >
+    <div style="text-align:center;">
+        <p-selectButton [options]="navs" (onChange)="chanageRouter($event)" [(ngModel)]="curr_url"></p-selectButton>
+        <hr />
+    </div>
+   <div>
+       <table class="table table-striped table-hover">
+           <thead>
+               <tr>
+                   <th colspan="2"  style="width:180px;"><button class="btn"  (click)="disabled()">全部禁用</button>
+                       <button class="btn btn-primary"  (click)="enabled()">全部启用</button></th>
+                  
+                   <th  style="width:160px;">操作</th>
+                   <th style="width:160px;">最后访问</th>
+                   <th style="width:160px;">当前状态</th>
+                   <th *ngFor="let t of account_types" style="width:80px; text-align:right;">{{t.title}}</th>
+                <th></th>
+               </tr>
+           </thead>
+           <tbody *ngIf="items">
+               <tr *ngFor="let cli of items let index=index">
+                   <td style="width:20px;">{{cli.id}}</td>
+                   <td style="width:160px;">{{cli.name}}</td>
+                   <td>
+                       <button class="btn" *ngIf="cli.disabled == 0" (click)="disabled(cli)">禁用</button>
+                       <button class="btn btn-primary" *ngIf="cli.disabled == 1" (click)="enabled(cli)">启用</button>
+                       &nbsp;<button class="btn" (click)="del(index,cli)">删除</button>
+                   </td>
+                   <td>{{cli.last_date}}</td>
+                   <td>{{cli.status_txt}}</td>
+       
+                   <td *ngFor="let t of account_types" style="width:80px; text-align:right;">{{cli.account_counts[t.id]}}</td>
+                 <td></td>
+               </tr>
+           </tbody>
+       </table>
+   </div>
+    <div class="console" [style.height]="(consoleHeight)+'%'">
+        <div class="nav">
+            <ul>
+                <li class="pull-right">
+                    <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
+                    <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
+                    <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
+                    <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>
+                </li>
+            </ul>
+        </div>
+        <div class="console-content">
+            <router-outlet></router-outlet>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
