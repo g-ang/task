@@ -8,7 +8,6 @@ import {Application} from './application';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 import {GrowlModule} from 'primeng/primeng';
 
 import {MessageService} from 'primeng/components/common/messageservice';
@@ -17,6 +16,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {LogsComponent, LogFrmatPipe} from './logs/logs.component'
 import {PageComponent} from './../common/page/page.component'
+
+import {SortPipe} from './sort.pipe'
 @NgModule({
     imports: [
         CommonModule,
@@ -26,7 +27,7 @@ import {PageComponent} from './../common/page/page.component'
         HttpClientModule
     ],
     declarations: [
-        LogsComponent, LogFrmatPipe, PageComponent
+        LogsComponent, LogFrmatPipe, PageComponent, SortPipe
     ],
     providers: [
         Common,
@@ -42,6 +43,7 @@ import {PageComponent} from './../common/page/page.component'
         BrowserModule,
         HttpClientModule,
         PageComponent,
+        SortPipe
     ]
 })
 

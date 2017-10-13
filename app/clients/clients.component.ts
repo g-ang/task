@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { Client } from './../server/client';
-import { msg } from './../common/common';
+import { msg, Page} from './../common/common';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -11,7 +11,7 @@ export class ClientsComponent implements OnInit {
     items = [];
     total = 0;
     offset = 0;
-    limit = 2000;
+    limit = 20;
     account_types: any[];
     account_counts: any[];
     client_caches: any[];
@@ -44,7 +44,12 @@ export class ClientsComponent implements OnInit {
         this.router.navigateByUrl(this.curr_url);
     }
 
-    listing() {
+    listing(page?: Page) {
+        if (page != undefined) {
+            this.offset = page.offset;
+            this.limit = page.rowcount;
+        }
+
       let param = { offset: this.offset, limit: this.limit }
       this.server.listing(param).subscribe((re:any) => {
           if (re.isSucc) {
@@ -53,6 +58,10 @@ export class ClientsComponent implements OnInit {
               this.account_types = re.account_types;
               this.account_counts = re.account_counts;
               this.client_caches = re.client_caches;
+          } else {
+              
+              msg.error(re.error_msg);
+              return;
           }
           this.items.forEach((r) => {
               r['account_counts'] = this.account_counts[r.id];
@@ -69,7 +78,7 @@ export class ClientsComponent implements OnInit {
           })
 
       })
-    } 
+    }
 
     enabled(cli?: any) {
         let ids = [];
@@ -96,6 +105,12 @@ export class ClientsComponent implements OnInit {
           
             this.server.disabled(cli.id).subscribe(re => { cli.disabled = true; msg.succ(`${cli.name} 已禁用`); });
         }
+    }
+
+
+    //查看账号
+    accounts(){
+
     }
 
     del(index: number, cli: any) {

@@ -39,15 +39,14 @@ export class ImportComponent implements OnInit{
     //导入帐号方式
     importStatus = getImportStatus();
 
-   
+    //新分类
+    new_typename = "";
 
     constructor(private account: Account, private router: Router) {
         this.fields = [
             { label: '帐号', value: 'account_name' },
             { label: '密码', value: 'password' },
         ];
-
-       
     }
 
     ngOnInit() {
@@ -92,7 +91,6 @@ export class ImportComponent implements OnInit{
             device_config: this.device_config,
         }
 
-
         if (data.fields == undefined || data.fields.length ==0) {
             msg.warn("请选择导入的字段");
             return;
@@ -126,6 +124,20 @@ export class ImportComponent implements OnInit{
               msg.succ(re.error_msg);
           }
       });
+    }
+
+
+    saveNewType() {
+        this.account.saveNewAccountType(this.new_typename).subscribe((re: any) => {
+            if (re.isSucc) {
+                msg.succ(`${this.new_typename} 保存成功`);
+                this.types.push(re.item);
+                this.new_typename = "";
+                this.account_type = re.type_id;
+            } else {
+                msg.error(re.error_msg);
+            }
+        })
     }
 
    

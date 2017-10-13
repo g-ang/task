@@ -1,0 +1,36 @@
+
+.server-console {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+ 
+    padding: 68px 32px 0;
+  
+    width: auto;
+    max-height: 95vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: #333;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #dbdbdb;
+}
+
+.server-console .table th{
+    color: #fafafa;
+}
+
+.req-info{
+    color:#808080;
+    font-size:50%;
+}

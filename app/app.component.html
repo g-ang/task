@@ -1,9 +1,7 @@
 ﻿<div class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="pull-left">
-
             <ul class="nav navbar-nav">
-
                 <li  *ngFor="let menu of menus let index=index" [class.active]="menu.selected">
                     <a  [routerLink]="[menu.url]" (click)="onMenu(menu)">{{menu.title}}</a>
                 </li>
@@ -16,8 +14,6 @@
 <div style="position:fixed;z-index:2000;">
     <p-growl [(value)]="msg.msgs"></p-growl>
 </div>
-
 <div>
-    <p *ngFor="let s of data">{{s}}</p>
     <router-outlet></router-outlet>
 </div>

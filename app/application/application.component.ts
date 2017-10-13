@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import {Application} from './../server/application';
 import {Router} from '@angular/router';
-import {msg} from './../common/common';
+import {msg, Page} from './../common/common';
 @Component({
   selector: 'app-application',
   templateUrl: './application.component.html',
@@ -24,7 +24,7 @@ export class ApplicationComponent implements OnInit {
     setConsoleHeight(n: any) {
         this.consoleHeight = n;
     }
-
+    filter = {appid:"",appname:""};
     constructor(private server: Application,private router: Router) {}
     ngOnInit() {
         this.navs = [
@@ -35,15 +35,19 @@ export class ApplicationComponent implements OnInit {
         this.listing();
     }
 
+    listing(page?:Page) {
+        if (page != undefined) {
+            this.offset = page.offset;
+            this.limit = page.rowcount;
+        }
 
-    listing() {
-        let param = { offset: this.offset, limit: this.limit, sort: this.sort, filter: {} }
+        let param = { offset: this.offset, limit: this.limit, sort: this.sort, filter: this.filter }
         this.server.listing(param).subscribe((re: any) => {
             if (re.isSucc) {
                 this.items = re.items;
                 this.total = re.total;
             } else{
-                msg.error(re.error_nsg);
+                msg.error(re.error_msg);
             }
         })
     }
@@ -56,7 +60,18 @@ export class ApplicationComponent implements OnInit {
         this.router.navigate(['app/addtask', app.id]);
     }
 
+    addkeyword(app: any)  {
+        if (this.consoleHeight < 5) {
+            this.setConsoleHeight(40);
+        }
+        this.curr_app = app;
+        this.router.navigate(['app/keyword/add', app.id]);
+    }
+
     task(app: any) {
+        if (this.consoleHeight <= 5) {
+            this.consoleHeight = 40;
+        }
         this.curr_app = app;
         this.router.navigate(['app/task', app.id]);
     }

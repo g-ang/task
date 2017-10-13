@@ -1,6 +1,10 @@
 ﻿import {Msg} from './msgs';
 import {Ws} from './ws';
+import {Storage} from './storage';
 export {Page} from './page/page';
+
+
+export var storage = new Storage("zskj:");
 
 //web socket
 var ws: Ws;

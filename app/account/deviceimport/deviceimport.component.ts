@@ -21,13 +21,7 @@ export class DeviceimportComponent implements OnInit {
     //分隔符
     sep: string;
 
-    //绑定的设备信息
-    device_config = {
-        type_id: -1,
-        start: 0,
-        end: 0,
-        isBind: false,  //是否绑定设备
-    };
+   
     fields: any[];
     selectedFields: any[];
     remarks='';
@@ -39,7 +33,11 @@ export class DeviceimportComponent implements OnInit {
     //导入帐号方式
     importStatus = getImportStatus();
 
-    constructor(private account: Account, private router: Router) {
+    //新分类名称
+    new_typename: string;
+
+
+    constructor(private account: Account, private router: Router){
         this.fields = [
             { label: 'UDID', value: 'udid'},
             { label: 'SerialNumber', value: 'serial_num' },
@@ -52,8 +50,6 @@ export class DeviceimportComponent implements OnInit {
             { label: '硬件版本号', value: 'hardware_version' },
             { label: '小网卡地址', value: 'router_macaddr' },
         ];
-
-
     }
 
     ngOnInit() {
@@ -89,12 +85,11 @@ export class DeviceimportComponent implements OnInit {
             filename: this.filename,
             fields: this.selectedFields,
             sep: '----',
-            device_config: this.device_config,
+            device_config: {},
             act: 'INSERT_DEVICE',
             remarks: this.remarks,
         }
-
-
+        
         if (data.fields == undefined || data.fields.length == 0) {
             msg.warn("请选择导入的字段");
             return;
@@ -110,8 +105,6 @@ export class DeviceimportComponent implements OnInit {
             return;
         }
 
-
-
         //绑定设备信息
         this.account.saveImport(data).subscribe((re: any) => {
             if (re.isSucc) {
@@ -121,6 +114,19 @@ export class DeviceimportComponent implements OnInit {
                 msg.succ(re.error_msg);
             }
         });
+    }
+
+    saveNewType(){
+        this.account.saveNewDeviceType(this.new_typename).subscribe((re: any) => {
+            if (re.isSucc) {
+                msg.succ(`${this.new_typename} 保存成功`);
+                this.types.push(re.item);
+                this.new_typename = "";
+                this.account_type = re.type_id;
+            } else {
+                msg.error(re.error_msg);
+            }
+        })
     }
 
 }

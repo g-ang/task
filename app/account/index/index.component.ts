@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { Account, Type, getImportStatus} from './../../server/account';
 import { api_addr} from './../../server/common';
 import { msg, WsConn} from './../../common/common';
@@ -38,4 +38,13 @@ export class IndexComponent implements OnInit {
         this.ws.send("account.generateCache", { account_type: account_type }, re=>this.logs.push(re) );
     }
 
+    delAccount(account_type: number) {
+        if (confirm("确定要删除该分类下面的所有帐号?")){
+            this.account.removeAccountByType(account_type).subscribe((re: any) => {
+                if (re.isSucc) {
+                    msg.succ("删除成功");
+                }
+            });
+        }
+    }
 }

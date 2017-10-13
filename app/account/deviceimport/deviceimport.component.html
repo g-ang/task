@@ -7,12 +7,27 @@
         </div>
     </div>
     <div class="form-group">
-        <div *ngIf="types">
-            <select [(ngModel)]="account_type" class="form-control">
-                <option [ngValue]="-1" selected>---请选择设备类型---</option>
-                <option *ngFor="let type of types" [ngValue]="type.id">{{type.title}}</option>
-            </select>
+        <div class="col-md-6" style="padding:0px;margin:0px;">
+            <div *ngIf="types">
+                <select [(ngModel)]="account_type" class="form-control">
+                    <option [ngValue]="-1" selected>---请选择设备类型---</option>
+                    <option *ngFor="let type of types" [ngValue]="type.type_id">{{type.type_name}}</option>
+                </select>
+            </div>
         </div>
+       <div style="margin-left:5px;" class="col-md-4">
+           <div class="input-group">
+               <input type="text" pInputText placeholder="新分类名称" class="form-control" [(ngModel)]="new_typename">
+               <span class="input-group-btn">
+                   <button class="btn btn-default" type="button"  (click)="saveNewType()">保存</button>
+               </span>
+           </div>
+        </div>
+       <div style="clear:both;"></div>
+    </div>
+
+    <div class="form-group">
+       
     </div>
 
     <div class="form-group" style="height:35px;overflow:hidden;">
@@ -23,6 +38,7 @@
     <div class="form-group">
         <textarea [(ngModel)]="remarks" placeholder="备注说明" class="form-control"></textarea>
     </div>
+
     <div class="form-group">
         <button class="btn btn-primary" (click)="save()">保存</button>
     </div>

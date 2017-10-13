@@ -4,24 +4,24 @@
 export class Application {
     constructor(private common: Common) { }
 
-    listing(body): Observable<Object>{
-       return this.common.post("/app/listing", body);
+    listing(body): Observable<Object> {
+        return this.common.post("/app/listing", body);
     }
 
     del(...ids: Number[]): Observable<Object> {
         return this.common.post("/app/del", { ids: ids });
     }
 
-    save(param: Object): Observable<Object>{
+    save(param: Object): Observable<Object> {
         return this.common.post("/app/add", param);
     }
 
-    setHot(id: Number): Observable<Object>{
+    setHot(id: Number): Observable<Object> {
         return this.common.post("/app/sethot", { id: id, "ishot": 1 });
     }
 
     cancelHot(id: Number): Observable<Object> {
-        return this.common.post("/app/sethot", { id: id,"ishot":0});
+        return this.common.post("/app/sethot", { id: id, "ishot": 0 });
     }
 
     keywordListing(body): Observable<Object> {
@@ -32,20 +32,32 @@ export class Application {
         return this.common.post("/app/task.add", body);
     }
 
-    taskList(param: Object): Observable<Object>{
+    taskList(param: Object): Observable<Object> {
         return this.common.post("/app/task.listing", param);
     }
 
-    startRunTask(task_id: number): Observable<Object>{
+    startRunTask(task_id: number): Observable<Object> {
         return this.common.post("/app/task.startrun", { task_id: task_id });
     }
 
-    endRunTask(task_id: number): Observable<Object>  {
+    endRunTask(task_id: number): Observable<Object> {
         return this.common.post("/app/task.endrun", { task_id: task_id });
     }
 
-    taskKeywords(param: Object): Observable<Object>  {
+    taskKeywords(param: Object): Observable<Object> {
         return this.common.post("/app/task.keywords", param);
+    }
+
+    keywordAdd(param: any): Observable<Object> {
+        return this.common.post("/app/keyword.add", param);
+    }
+
+    taskRuns(): Observable<Object> {
+        return this.common.post("/task/runlist", {})
+    }
+
+    setTaskSort(task_id: number, value: number) {
+        return this.common.post("/task/setsort", { task_id: task_id, value: value});
     }
 
 }

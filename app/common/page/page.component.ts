@@ -16,14 +16,19 @@ export class PageComponent implements OnInit, OnChanges {
     previousOff = true;
     pagetotal = 0;
     offset = 0;
-    constructor() {
+    selectLimit = [10, 20, 50, 100];
 
-    }
+    constructor() {}
+
     ngOnChanges(e: any) {
         if (e.page) {
             this.page = e.page.currentValue;
         }
         if (e.total) {
+            this.pagetotal = Math.ceil(this.total / this.rowcount);
+        }
+
+        if (e.rowcount != undefined) {
             this.pagetotal = Math.ceil(this.total / this.rowcount);
         }
     }

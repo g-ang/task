@@ -1,0 +1,8 @@
+﻿<style>
+    .form-control{
+        width:100%;
+        display:initial;
+    }
+</style>
+<span *ngIf="disable" (dblclick)="onedit()">{{value}}</span>
+<input *ngIf="disable == false"  (keyup)="enterEdit($event)"  (blur)="blurEdit()" type="text" class="form-control" [(ngModel)]="value"/>

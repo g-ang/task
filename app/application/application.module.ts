@@ -8,6 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule } from './../server/server.module';
 
 import { AddComponent } from './add/add.component';
+import { KeywordAddComponent } from './keyword/add/add.component';
+
 import { AccountTypeModule } from './../account/type/type.module';
 
 import {CheckboxModule, MultiSelectModule, FileUploadModule, SelectButtonModule, ListboxModule, InputSwitchModule} from 'primeng/primeng';
@@ -22,6 +24,7 @@ const routers: Routes = [
             { path: 'add', component: AddComponent },
             { path: 'addtask/:appinfo_id', component: AddtaskComponent },
             { path: 'task/:appid', component: TaskComponent },
+            { path: 'keyword/add/:appid', component: KeywordAddComponent },
           
         ]
     },
@@ -39,9 +42,17 @@ const routers: Routes = [
         ServerModule,
         AccountTypeModule,
         ListboxModule,
-        InputSwitchModule
+        InputSwitchModule,
     ],
 
-    declarations: [ApplicationComponent, TaskComponent, AddComponent, AddtaskComponent, KeywordComponent, IndexComponent]
+    declarations: [
+        ApplicationComponent,
+        TaskComponent,
+        AddComponent,
+        AddtaskComponent,
+        KeywordComponent,
+        IndexComponent,
+        KeywordAddComponent
+    ]
 })
 export class ApplicationModule { }

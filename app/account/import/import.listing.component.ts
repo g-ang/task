@@ -43,7 +43,8 @@ export class ImportListingComponent implements OnInit {
     chanageAct(e) {
         this.listing();
     }
-  ngOnInit() {
+
+    ngOnInit() {
 
       this.account.getTypes().subscribe((re: any) => {
           if (re.isSucc) {
@@ -70,7 +71,7 @@ export class ImportListingComponent implements OnInit {
           }
           this.items = re.items;
       });
-  }
+    }
 
   //执行导入操作
   import(file:any) {

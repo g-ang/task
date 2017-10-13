@@ -37,6 +37,35 @@ export class Account{
     saveBindClient(client_name: string, account_ids: number[]): Observable<Object>  {
         return this.common.post("/account/bindClient", { client_name: client_name, account_ids: account_ids});
     }
+
+    deviceListing(params: any): Observable<Object>  {
+        return this.common.post("/account/device.listing", params);
+    }
+
+    bindDevice(params: any): Observable<Object> {
+        return this.common.post("/account/device.bind", params);
+    }
+
+    saveNewDeviceType(name: string): Observable<Object>  {
+        return this.common.post("/account/device.savetype", { name: name });
+    }
+
+    saveNewAccountType(name: string): Observable<Object> {
+        return this.common.post("/account/type.add", { title: name,id:0});
+    }
+
+    removeAccountByType(type_id: number): Observable<Object> {
+        return this.common.post("/account/removeAccountByType", { type_id: type_id });
+    }
+
+    unBindClient(ids: number[]): Observable<Object> {
+        return this.common.post("/account/unbindclient", { account_ids: ids });
+    }
+
+    unBindDevice(ids: number[]): Observable<Object> {
+        return this.common.post("/account/unbinddevice", { account_ids: ids });
+    }
+    
 }
 
 export class Type{

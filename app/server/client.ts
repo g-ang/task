@@ -8,6 +8,10 @@ export class Client {
        return this.common.post("/client/listing", body);
     }
 
+    all(): Observable<Object> {
+        return this.common.post("/client/all", {});
+    }
+
     del(...ids: Number[]): Observable<Object> {
         return this.common.post("/client/del", { ids: ids });
     }

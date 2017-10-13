@@ -9,8 +9,7 @@
                <tr>
                    <th colspan="2"  style="width:180px;"><button class="btn"  (click)="disabled()">全部禁用</button>
                        <button class="btn btn-primary"  (click)="enabled()">全部启用</button></th>
-                  
-                   <th  style="width:160px;">操作</th>
+                  <th  style="width:220px;">操作</th>
                    <th style="width:160px;">最后访问</th>
                    <th style="width:160px;">当前状态</th>
                    <th *ngFor="let t of account_types" style="width:80px; text-align:right;">{{t.title}}</th>
@@ -19,20 +18,24 @@
            </thead>
            <tbody *ngIf="items">
                <tr *ngFor="let cli of items let index=index">
-                   <td style="width:20px;">{{cli.id}}</td>
+                   <td style="width:90px;" title="{{cli.id}}"><button class="btn" *ngIf="cli.disabled == 0" (click)="disabled(cli)">禁用</button>
+                    <button class="btn btn-primary" *ngIf="cli.disabled == 1" (click)="enabled(cli)">启用</button></td>
                    <td style="width:160px;">{{cli.name}}</td>
                    <td>
-                       <button class="btn" *ngIf="cli.disabled == 0" (click)="disabled(cli)">禁用</button>
-                       <button class="btn btn-primary" *ngIf="cli.disabled == 1" (click)="enabled(cli)">启用</button>
-                       &nbsp;<button class="btn" (click)="del(index,cli)">删除</button>
+                       <button class="btn" (click)="accounts(cli)">查看账号</button>
+                       <button class="btn" (click)="del(index,cli)">删除</button>
                    </td>
                    <td>{{cli.last_date}}</td>
                    <td>{{cli.status_txt}}</td>
-       
                    <td *ngFor="let t of account_types" style="width:80px; text-align:right;">{{cli.account_counts[t.id]}}</td>
                  <td></td>
                </tr>
            </tbody>
+           <tfoot>
+               <tr>
+                   <td colspan="28"><div *ngIf="total>0" [page]="1" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
+               </tr>
+           </tfoot>
        </table>
    </div>
     <div class="console" [style.height]="(consoleHeight)+'%'">
