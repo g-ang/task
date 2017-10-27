@@ -16,7 +16,7 @@ export class PageComponent implements OnInit, OnChanges {
     previousOff = true;
     pagetotal = 0;
     offset = 0;
-    selectLimit = [10, 20, 50, 100];
+    selectLimit = [10, 20, 50, 100,150,200];
 
     constructor() {}
 
@@ -37,8 +37,6 @@ export class PageComponent implements OnInit, OnChanges {
         if (typeof this.mod == 'undefined') {
             this.mod = "def";
         }
-        console.log(this.mod);
-
         if (this.rowcount > this.total) {
             this.nextOff = true;
         }

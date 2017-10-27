@@ -19,11 +19,12 @@ export class ApplicationComponent implements OnInit {
 
     curr_app: any;
 
-    consoleHeight = 40;
+    consoleHeight = 4;
 
     setConsoleHeight(n: any) {
         this.consoleHeight = n;
     }
+
     filter = {appid:"",appname:""};
     constructor(private server: Application,private router: Router) {}
     ngOnInit() {
@@ -49,6 +50,8 @@ export class ApplicationComponent implements OnInit {
             } else{
                 msg.error(re.error_msg);
             }
+
+
         })
     }
 
@@ -104,5 +107,15 @@ export class ApplicationComponent implements OnInit {
         this.router.navigateByUrl(this.curr_url);
     }
 
- 
+    del(index: number, app: any) {
+        if (false == confirm("你确定要删除这个应用?")) {
+            return;
+        }
+        this.server.del(app.id).subscribe((re: any) => {
+            if (re.isSucc){
+                msg.succ("删除成功");
+                this.items.splice(index,1);
+            }
+        });
+    }
 }

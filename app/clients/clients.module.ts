@@ -7,10 +7,13 @@ import { ClientsComponent } from './clients.component';
 
 import {CheckboxModule, MultiSelectModule, FileUploadModule, SelectButtonModule} from 'primeng/primeng';
 import { AddComponent } from './add/add.component';
+import { GroupAddComponent } from './group/group.component';
+import {EnterModule} from  '../common/enter/enter.module';
 const routers: Routes = [
     {
         path: 'clients', component: ClientsComponent, children: [
             { path: 'adds', component: AddComponent },
+            { path: 'group_add', component: GroupAddComponent },
         ]
     },
 ]
@@ -18,13 +21,15 @@ const routers: Routes = [
   declarations: [
       ClientsComponent,
       AddComponent,
+      GroupAddComponent,
   ],
   imports: [
       RouterModule.forRoot(routers),
       BrowserModule,
       HttpClientModule,
       ServerModule,
-      CheckboxModule, MultiSelectModule, FileUploadModule, SelectButtonModule
+      CheckboxModule, MultiSelectModule, FileUploadModule, SelectButtonModule,
+      EnterModule
   ],
   providers: [],
   bootstrap: [],

@@ -4,5 +4,5 @@
         display:initial;
     }
 </style>
-<span *ngIf="disable" (dblclick)="onedit()">{{value}}</span>
+<span *ngIf="disable" (dblclick)="onedit()" title="双击可以进行编辑">{{value}}</span>
 <input *ngIf="disable == false"  (keyup)="enterEdit($event)"  (blur)="blurEdit()" type="text" class="form-control" [(ngModel)]="value"/>

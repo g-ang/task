@@ -4,6 +4,7 @@ import {Common} from './common';
 import {Account} from './account';
 import {Client} from './client';
 import {Application} from './application';
+import {Setting} from './setting';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +34,8 @@ import {SortPipe} from './sort.pipe'
         Common,
         Account,
         Client,
-        Application
+        Application,
+        Setting
     ],
     exports: [
         CommonModule,

@@ -65,13 +65,16 @@ export class Account{
     unBindDevice(ids: number[]): Observable<Object> {
         return this.common.post("/account/unbinddevice", { account_ids: ids });
     }
-    
 }
 
 export class Type{
     id: number;
     title: string;
+
 }
+
+
+
 
 export function getStatus(): Type[]{
     return <Type[]>[
@@ -81,10 +84,10 @@ export function getStatus(): Type[]{
     ]
 }
 
-export function getImportStatus(): Type[] {
-    return <Type[]>[
-        {id:0,title: "导入未过检新号"},
-        {id:2,title: "导入已过检新号"},
-        {id:3,title: "导入解锁或更新密码的帐号"},
+export function getImportStatus(): any[] {
+    return <any[]>[
+        { id: 0, title: "导入未过检新号",act:'INSERT'},
+        { id: 2, title: "导入已过检新号",act:'INSERT'},
+        { id: 3, title: "导入解锁或更新密码的帐号",act: 'UPDATE'},
     ]
 }

@@ -14,6 +14,7 @@ export class AddtaskComponent implements OnInit, OnChanges {
 
     addruntime: string;
 
+    add_tomorrow_runtime:string;
     todays: string[];
     tomorrows: string[];
     keywords = [];
@@ -26,8 +27,10 @@ export class AddtaskComponent implements OnInit, OnChanges {
 
     isAllClient = true;
 
-    clients = [];
-    selectedClients = [];
+    //客户端分组
+    client_groups = [];
+    selected_client_groups = [];
+
 
     dates = [{ label: '今天', value: 'today' }, { label: '明天', value: 'tomorrow' }];
     date = 'today';
@@ -51,12 +54,20 @@ export class AddtaskComponent implements OnInit, OnChanges {
     }
 
     addRunTime(e,flag) {
-        this.addruntime = this.addruntime.replace(".", ":");
+       
         if (e.keyCode == 13) {
-            if (flag== "today") {
+            if (flag == "today") {
+                this.addruntime = this.addruntime.replace(".", ":").trim();
                 this.todays.push(this.addruntime);
+                if (this.addruntime.length == 0) {
+                    return;
+                }
             } else {
-                this.tomorrows.push(this.addruntime);
+                this.add_tomorrow_runtime = this.add_tomorrow_runtime.replace(".", ":").trim();
+                if (this.add_tomorrow_runtime.length == 0) {
+                    return;
+                }
+                this.tomorrows.push(this.add_tomorrow_runtime);
             }
         }
     }
@@ -76,11 +87,10 @@ export class AddtaskComponent implements OnInit, OnChanges {
     }
 
     changeClientSw() {
-        if (this.isAllClient == false && this.clients.length ==0) {
-            this.clientServer.listing({ offset: 0, limit: 5000 }).subscribe((re: any) => {
+        if (this.isAllClient == false && this.client_groups.length == 0) {
+            this.clientServer.groups().subscribe((re: any) => {
                 if (re.isSucc) {
-                    this.clients = re.items;
-                  
+                    this.client_groups = re.items;
                  }
             })
            
@@ -88,26 +98,39 @@ export class AddtaskComponent implements OnInit, OnChanges {
     }
 
     addClient(index: any) {
-        let row = this.clients[index];
+        let row = this.client_groups[index];
         if (row != undefined) {
-            this.clients.splice(index, 1);
-            this.selectedClients.push(row);
+            this.client_groups.splice(index, 1);
+            this.selected_client_groups.push(row);
         }
     }
 
     cancelClient(index: any) {
-        let row = this.selectedClients[index];
+        let row = this.selected_client_groups[index];
         if (row != undefined) {
-            this.selectedClients.splice(index, 1);
-            this.clients.push(row);
+            this.selected_client_groups.splice(index, 1);
+            this.client_groups.push(row);
         }
     }
 
     save() {
+        if (this.task_name == undefined || this.task_name.length == 0) {
+            msg.warn("任务名称不能为空");
+        }
+
         if (this.keywords.length == 0) {
             msg.warn("请至少设置一个关键字");
             return;
         }
+
+        if (this.account_type == undefined || this.account_type <= 0) {
+            msg.warn("请选择账号类型");
+            return;
+        }
+
+        this.task_name = this.task_name.trim();
+      
+
         this.onSaveDisabled = true;
 
         let keywords = {};
@@ -116,10 +139,10 @@ export class AddtaskComponent implements OnInit, OnChanges {
             keywords[k.id] = k.quant;
         });
 
-        let clients = [];
+        let client_group_ids = [];
 
         if (this.isAllClient == false) {
-            this.selectedClients.forEach(c => clients.push(c.name) )
+            this.selected_client_groups.forEach(c => client_group_ids.push(c.id));
         }
 
         let param = {
@@ -130,7 +153,7 @@ export class AddtaskComponent implements OnInit, OnChanges {
             keywords:keywords,
             account_type:this.account_type,
             sort: this.sort,
-            clients: clients,
+            client_group_ids: client_group_ids,
         }
 
         this.server.saveTask(param).subscribe((re: any) => {

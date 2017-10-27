@@ -7,7 +7,6 @@ import {Application} from './../server/application';
   styleUrls: ['./console.component.css']
 })
 export class ConsoleComponent implements OnInit {
-
     ws = WsConn();
     get_tasks = [];
     complete_tasks = [];
@@ -17,7 +16,21 @@ export class ConsoleComponent implements OnInit {
     keywords = [];
     wait_tasks = [];
 
-    constructor(private appServer: Application){}
+    //task
+    taskListSwitch = [];
+
+    crontab_list = [];
+
+    currTaskSwitch ='get_list';
+
+    constructor(private appServer: Application){
+
+        this.taskListSwitch=[
+            { label: '获取任务列表', value: 'get_list'},
+            { label: '完成任务列表', value: 'succ_list'},
+            { label: '失败任务列表', value: 'fail_list'}
+        ];
+    }
 
     listing() {
         this.appServer.taskRuns().subscribe((res: any) => {
@@ -41,29 +54,39 @@ export class ConsoleComponent implements OnInit {
           res["timeout"] = 0;
           res["timeout_txt"] = '0 秒前';
           this.get_tasks.unshift(res);
+          this.get_tasks = this.get_tasks.slice(0, 15);
       });
 
       this.ws.watch("api.task.complete", (res) => {
-       
           res["timeout"] = 0;
           res["timeout_txt"] = '0 秒前';
           this.complete_tasks.unshift(res);
+          this.complete_tasks = this.complete_tasks.slice(0, 15);
       })
     
       this.ws.watch("api.task.failing", (res) => {
           res["timeout"] = 0;
           res["timeout_txt"] = '0 秒前';
           this.failing_tasks.unshift(res);
+          this.failing_tasks = this.failing_tasks.slice(0, 15);
       })
 
       this.ws.watch("fail", (res) =>{
           res["timeout"] = 0;
           res["timeout_txt"] = '0 秒前';
           this.fails.unshift(res);
+          this.fails = this.fails.slice(0, 15);
+      });
+
+      this.ws.watch("crontab.timetask", (res: any) => {
+          res["timeout"] = 0;
+          res["timeout_txt"] = '0 秒前';
+          this.crontab_list.unshift(res);
+          this.crontab_list = this.crontab_list.slice(0, 5);
       });
       
       let h = 3600
-      let d = h * 24
+      let d = h * 24;
       let timeoutSum = (timeout: number) => {
           if (timeout > d) {
               let s = parseInt(String(timeout / d));
@@ -73,14 +96,13 @@ export class ConsoleComponent implements OnInit {
               let s = parseInt(String(timeout / h));
               return `${s} 小时前`;
           }
-
           if (timeout > 60) {
               let s = parseInt(String(timeout / 60));
               return `${s} 分钟前`;
           }
-
           return `${timeout} 秒前`;
       }
+
       setInterval(() => {
           this.fails.forEach(row => {
               row["timeout_txt"] = timeoutSum(++row["timeout"]);
@@ -97,7 +119,11 @@ export class ConsoleComponent implements OnInit {
           this.failing_tasks.forEach(row => {
               row["timeout_txt"] = timeoutSum(++row["timeout"]);
           });
-      }, 1000);
+
+          this.crontab_list.forEach(row => {
+              row["timeout_txt"] = timeoutSum(++row["timeout"]);
+          });
+      },1000);
     }
 
     getKeywords(t: any) {

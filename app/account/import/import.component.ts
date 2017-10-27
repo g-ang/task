@@ -64,20 +64,13 @@ export class ImportComponent implements OnInit{
     }
 
     onUpload(e) {
-      let res = JSON.parse(e.xhr.responseText);
-      if (res.isSucc) {
+      if (e.data.isSucc) {
           this.disabledSave =false;
           msg.succ("上传成功");
-          this.filename = res.filename;
-          this.filepath = res.filepath;
+          this.filename = e.data.filename;
+          this.filepath = e.data.filepath;
           this.disabledUpload = false;
       }
-    }
-    onProgress(e) {
-        this.progress = e.progress;
-        if (e.progress < 100) {
-            this.disabledUpload = true;
-        }
     }
     
     save() {
@@ -88,7 +81,16 @@ export class ImportComponent implements OnInit{
             filename: this.filename,
             fields: this.selectedFields,
             sep: '----',
+            act:'',
             device_config: this.device_config,
+        }
+
+        if (data.account_status == 0 || data.account_status == 2) {
+            data.act = 'INSERT';
+        }
+
+        if (data.account_status == 3) {
+            data.act = 'UPDATE';
         }
 
         if (data.fields == undefined || data.fields.length ==0) {
@@ -101,12 +103,10 @@ export class ImportComponent implements OnInit{
             return;
         }
 
-        if (data.account_status == -1) {
+        if (data.account_status == -1 || data.act=="") {
             msg.warn("请选择账号状态");
             return;
         }
-
-        
 
         if (data.filename == undefined || data.filename == "") {
             msg.warn("请选择上传的文件");
@@ -128,6 +128,12 @@ export class ImportComponent implements OnInit{
 
 
     saveNewType() {
+
+        this.new_typename = this.new_typename.trim();
+        if (this.new_typename.length == 0) {
+            msg.warn("分类名称不能为空");
+            return;
+        }
         this.account.saveNewAccountType(this.new_typename).subscribe((re: any) => {
             if (re.isSucc) {
                 msg.succ(`${this.new_typename} 保存成功`);

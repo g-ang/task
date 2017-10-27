@@ -1,0 +1,88 @@
+﻿<div  class="container">
+    <form class="form-horizontal row-border" id="validate-1" action="#" novalidate="novalidate">
+        <fieldset>
+            <legend>VNP设置</legend>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">VPN重启超时时间(秒)</label>
+                <div class="col-sm-9">
+                    <input type="number" name="restart_maxtime"  [(ngModel)]="settings.restart_maxtime" style="width:100px;" class="form-control required">
+                    <p class="alert alert-warning">0为超时不自动重启.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-3">VPN重启后检查IP 是否重复使用</label>
+                <div class="col-sm-9">
+                    <p-radioButton label="关闭" name="on_repeat_filter_ip" value="0" [(ngModel)]="settings.on_repeat_filter_ip"></p-radioButton>
+                    <p-radioButton label="开启" name="on_repeat_filter_ip" value="1" [(ngModel)]="settings.on_repeat_filter_ip"></p-radioButton>
+                </div>
+            </div>
+            </fieldset>
+            
+        <fieldset>
+            <legend>获取任务设置</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-3">帐号重复使用</label>
+                <div class="col-sm-9">
+                    <p-radioButton label="允许" name="on_repeat_account" value="0" [(ngModel)]="settings.on_repeat_account"></p-radioButton>
+                    <p-radioButton label="不允许" name="on_repeat_account" value="1" [(ngModel)]="settings.on_repeat_account"></p-radioButton>
+                 </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">一个应用下同时运行多个任务</label>
+                <div class="col-sm-9">
+                    <p-radioButton label="允许" name="on_repeat_runtask" value="1" [(ngModel)]="settings.on_repeat_runtask"></p-radioButton>
+                    <p-radioButton label="不允许" name="on_repeat_runtask"value="0" [(ngModel)]="settings.on_repeat_runtask"></p-radioButton>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">获取任务方式</label>
+                <div class="col-sm-9">
+                    <p-radioButton label="都是主任务方式" name="get_task_mod" value="1" [(ngModel)]="settings.get_task_mod"></p-radioButton>
+                    <p-radioButton label="主任务和子任务方式" name="get_task_mod" value="0" [(ngModel)]="settings.get_task_mod"></p-radioButton>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-3">任务超时时间(秒)</label>
+                <div class="col-sm-9">
+                    <input type="number" name="task_timeout"  [(ngModel)]="settings.task_timeout" style="width:100px;" class="form-control required">
+                </div>
+            </div>
+            </fieldset>
+            <fieldset>
+                <legend>VPS设置</legend>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">完成多少任务后VPS切换IP</label>
+                    <div class="col-sm-9">
+                        <input type="number" name="vpsRunQuant" [(ngModel)]="settings.vpsRunQuant" style="width:100px;" class="form-control required">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">VPS去重时间(天)</label>
+                    <div class="col-sm-9">
+                        <input type="number" name="ip_filter_time" [(ngModel)]="settings.ip_filter_time" style="width:100px;" class="form-control required">
+                    </div>
+                </div>
+
+            </fieldset>
+        <fieldset>
+            <legend>其他</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-3">打码类型设置 (<a href="http://120.76.74.247/images/fadf.png" target="_blank">查看类型</a>)</label>
+                <div class="col-sm-9">
+                    <input type="number" name="captchatype" [(ngModel)]="settings.captchatype" style="width:100px;" class="form-control required">
+                </div>
+            </div>
+            </fieldset>
+            <div class="form-group">
+                <label class="col-sm-3"></label>
+                <div class="col-sm-9">
+                    <input type="button" (click)="save()" value="保存" class="btn btn-primary">
+                </div>
+            </div>
+</form>
+</div>

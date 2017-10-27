@@ -1,0 +1,41 @@
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color:#2a4053;
+}
+.navbar-default{
+     background: #4d7496;
+    min-height: 48px;
+    filter: none;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+     box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+       box-sizing: border-box;
+}
+
+.navbar-default .nav>li>a {
+    color: #fff;
+    font-size: 13px;
+    text-shadow: 0 1px 0 #000;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+

@@ -1,0 +1,11 @@
+﻿.uploadbutton {
+ opacity:0;
+cursor:pointer;
+z-index:2222;
+}
+
+.uploadtxt {
+    position:absolute;
+    text-align:center;
+    cursor:pointer;
+}

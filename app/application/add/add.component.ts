@@ -11,25 +11,29 @@ import {msg} from './../../common/common';
 })
 export class AddComponent implements OnInit {
 
-    appname: string;
-    appid: string;
-    bundleid: string;
+    appname="";
+    appid = "";
+    bundleid = "";
     constructor(private server: Application, private clientServer: Client, private router: Router, private route: ActivatedRoute) {
       
     }
 
     ngOnInit() {}
     save() {
+
+        this.appname = this.appname.trim();
         if (this.appname == "") {
             msg.warn(`应用名称不能为空`);
             return;
         }
 
+        this.appid=this.appid.trim();
         if (this.appid == "") {
             msg.warn(`appid不能为空`);
             return;
         }
 
+        this.bundleid = this.bundleid.trim();
         if (this.bundleid == "") {
             msg.warn(`bundleid 不能为空`);
             return;
@@ -44,7 +48,5 @@ export class AddComponent implements OnInit {
             }
         })
     }
- 
-
 
 }

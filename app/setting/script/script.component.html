@@ -1,0 +1,72 @@
+﻿
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th style="width:60px;">版本号</th>
+            <th style="width:60px;">名字</th>
+            <th style="width:160px;">路径</th>
+            <th style="width:160px;">描述</th>
+            <th style="width:100px;">上传时间</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="items">
+        <tr *ngFor="let item of items let index=index" style="cursor:pointer;">
+            <td style="width:160px;">{{item.version}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.path}}</td>
+            <td>{{item.desc}}</td>
+            <td>{{item.adddate}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="30" *ngIf="total>0"><div style="margin-top:-10px;" [page]="page" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
+        </tr>
+
+        <tr *ngIf="total==0">
+            <td colspan="30">没有数据</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="console" [style.height]="(consoleHeight)+'%'">
+    <div class="nav">
+        <ul>
+            <li class="pull-right">
+                <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
+                <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
+                <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
+                <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>
+            </li>
+        </ul>
+    </div>
+    <div class="console-content">
+        <div class="container">
+            <div class="form-group">
+                <label>上传脚本名称</label>
+                <uploadbox [addr]="upscript_dir" accept=".deb" (success)="uploadSuccess($event)"></uploadbox>
+            </div>
+
+            <div class="form-group">
+                <label>脚本名称</label>
+                <input [(ngModel)]="script.name" type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label> 脚本描述</label>
+                <textarea [(ngModel)]="script.desc" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>版本号</label>
+                <input [(ngModel)]="script.version" type="number" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <button class="btn" (click)="save()">保存</button>
+            </div>
+        </div>
+
+        <div class="console-footer"></div>
+    </div>
+</div>

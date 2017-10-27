@@ -1,0 +1,4 @@
+﻿<div class="upload-box">
+    <button class="uploadtxt btn btn-primary" [disabled]="buttonDisable">&nbsp;&nbsp;{{buttonName}}&nbsp;&nbsp;</button>
+    <input type="file" accept="{{accept}}" class="uploadbutton" [upload]="upload_addr" [params]="params" (status)="uploadStatus($event)" />
+</div>

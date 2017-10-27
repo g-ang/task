@@ -1,13 +1,19 @@
 ﻿import {Injectable, NgModule} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {storage} from '../common/common';
+import {storage, isLocalhost} from '../common/common';
 import {Observable} from 'rxjs';
 
-const api_addr = "http://120.76.158.16:1839/admin";
+var api_addr: string;
+
+if (isLocalhost()) {
+     api_addr = "http://g.com:1839/admin";
+} else {
+     api_addr = "http://120.76.158.16:1839/admin";
+}
+
 @Injectable()
 export class Common {
     constructor(private http: HttpClient) { }
-
 
     private genToken() {
         var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -25,7 +31,8 @@ export class Common {
             token = this.genToken();
             storage.set("token", token);
         }
-        let h = new HttpHeaders({ "Authorization": token });
+        let h = new HttpHeaders({
+            "Authorization": token,"Content-Type":"aaa" });
         return h;
     }
 

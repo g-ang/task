@@ -4,54 +4,96 @@
         <hr />
     </div>
    <div>
-       <table class="table table-striped table-hover">
-           <thead>
-               <tr>
-                   <th colspan="2"  style="width:180px;"><button class="btn"  (click)="disabled()">全部禁用</button>
-                       <button class="btn btn-primary"  (click)="enabled()">全部启用</button></th>
-                  <th  style="width:220px;">操作</th>
-                   <th style="width:160px;">最后访问</th>
-                   <th style="width:160px;">当前状态</th>
-                   <th *ngFor="let t of account_types" style="width:80px; text-align:right;">{{t.title}}</th>
-                <th></th>
-               </tr>
-           </thead>
-           <tbody *ngIf="items">
-               <tr *ngFor="let cli of items let index=index">
-                   <td style="width:90px;" title="{{cli.id}}"><button class="btn" *ngIf="cli.disabled == 0" (click)="disabled(cli)">禁用</button>
-                    <button class="btn btn-primary" *ngIf="cli.disabled == 1" (click)="enabled(cli)">启用</button></td>
-                   <td style="width:160px;">{{cli.name}}</td>
-                   <td>
-                       <button class="btn" (click)="accounts(cli)">查看账号</button>
-                       <button class="btn" (click)="del(index,cli)">删除</button>
-                   </td>
-                   <td>{{cli.last_date}}</td>
-                   <td>{{cli.status_txt}}</td>
-                   <td *ngFor="let t of account_types" style="width:80px; text-align:right;">{{cli.account_counts[t.id]}}</td>
-                 <td></td>
-               </tr>
-           </tbody>
-           <tfoot>
-               <tr>
-                   <td colspan="28"><div *ngIf="total>0" [page]="1" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
-               </tr>
-           </tfoot>
-       </table>
-   </div>
-    <div class="console" [style.height]="(consoleHeight)+'%'">
-        <div class="nav">
-            <ul>
-                <li class="pull-right">
-                    <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
-                    <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
-                    <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
-                    <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>
-                </li>
-            </ul>
+        <div class="col-md-2">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                   
+                <tr>
+                        <th colspan="15">客户端分类<a href="javascript:void(0);" class="pull-right" (click)="getGroups()">刷新</a></th>
+                    </tr>
+                    </thead>
+                   <tbody>
+                       <tr *ngFor="let g of groups let index=index">
+                           <td style="width:120px;"><enter [val]="g.name" [id]="index" (update)="editGroup($event)"></enter></td>
+                           <td>
+                              <a href="javascript:void(0);" (click)="selectGroup(g)">查看客户端</a>
+                              <a href="javascript:void(0);" (click)="setCurrGroup(g)">设为此分组</a>
+                           </td>
+                           
+                       </tr>
+                   </tbody>
+            </table>
         </div>
-        <div class="console-content">
-            <router-outlet></router-outlet>
-            <div style="clear:both;"></div>
-        </div>
+
+       <div class="col-md-10">
+           <table class="table table-striped table-hover table-bordered">
+               <thead>
+                   <tr>
+                       <th colspan="15">
+                           <div class="col-md-2">
+                               <input type="text" [(ngModel)]="filter.name"  class="form-control" placeholder="请输入客户端编号"/>
+                           </div>
+                           <div class="col-md-2">
+                                <button class="btn btn-primary" (click)="listing()">搜索</button>
+                                <button class="btn btn-primary" (click)="listingAll()">显示所有客户端</button>
+                           </div>
+                       </th>
+                   </tr>
+                   <tr>
+                       <td style="width:16px;"><input type="checkbox" (click)="selectAll()" [(ngModel)]="checked" /></td>
+                        <th colspan="2" style="width:260px;">
+                           <button class="btn" (click)="disabled()">全部禁用</button>
+                           <button class="btn btn-primary" (click)="enabled()">全部启用</button>
+                       </th>
+                       <th style="width:220px;">分组</th>
+                       <th style="width:220px;">操作</th>
+                       <th style="width:160px;">最后访问</th>
+                       <th style="width:160px;">当前状态</th>
+                       <th *ngFor="let t of account_types" style="width:80px; text-align:right;">{{t.title}}</th>
+                       <th></th>
+                   </tr>
+               </thead>
+               <tbody *ngIf="items">
+                   <tr *ngFor="let cli of items let index=index">
+                       <td style="width:16px;"><input type="checkbox" [(ngModel)]="cli.checked" /></td>
+                       <td style="width:90px;" title="{{cli.id}}">
+                           <button class="btn" *ngIf="cli.disabled == 0" (click)="disabled(cli)">禁用</button>
+                           <button class="btn btn-primary" *ngIf="cli.disabled == 1" (click)="enabled(cli)">启用</button>
+                       </td>
+                       <td style="width:160px;"><enter [val]="cli.name" [id]="index" (update)="editClientName($event)"></enter></td>
+                       <td>{{cli.group_name}}</td>
+                       <td>
+                           <button class="btn" (click)="accounts(cli)">查看账号</button>
+                           <button class="btn" (click)="del(index,cli)">删除</button>
+                       </td>
+                       <td>{{cli.last_date}}</td>
+                       <td>{{cli.status_txt}}</td>
+                       <td *ngFor="let t of account_types" style="width:80px; text-align:right;"><span *ngIf="account_counts[t.id]">{{account_counts[t.id]}}</span></td>
+                       <td></td>
+                   </tr>
+               </tbody>
+               <tfoot>
+                   <tr>
+                       <td colspan="28"><div *ngIf="total>0" [page]="1" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
+                   </tr>
+               </tfoot>
+           </table>
+       </div>
+</div>
+<div class="console" [style.height]="(consoleHeight)+'%'">
+    <div class="nav">
+        <ul>
+            <li class="pull-right">
+                <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
+                <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
+                <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
+                <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>
+            </li>
+        </ul>
     </div>
+    <div class="console-content">
+        <router-outlet></router-outlet>
+        <div style="clear:both;"></div>
+    </div>
+</div>
 </div>

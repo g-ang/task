@@ -60,20 +60,13 @@ export class DeviceimportComponent implements OnInit {
         });
     }
 
-    onUpload(e) {
-        let res = JSON.parse(e.xhr.responseText);
-        if (res.isSucc) {
+    onUpload(res:any) {
+        if (res.data.isSucc) {
             this.disabledSave = false;
             msg.succ("上传成功");
-            this.filename = res.filename;
-            this.filepath = res.filepath;
+            this.filename = res.data.filename;
+            this.filepath = res.data.filepath;
             this.disabledUpload = false;
-        }
-    }
-    onProgress(e) {
-        this.progress = e.progress;
-        if (e.progress < 100) {
-            this.disabledUpload = true;
         }
     }
 
@@ -116,7 +109,13 @@ export class DeviceimportComponent implements OnInit {
         });
     }
 
-    saveNewType(){
+    saveNewType() {
+        this.new_typename=this.new_typename.trim();
+        if (this.new_typename.length == 0) {
+            msg.warn("分类名称不能为空");
+            return;
+        }
+
         this.account.saveNewDeviceType(this.new_typename).subscribe((re: any) => {
             if (re.isSucc) {
                 msg.succ(`${this.new_typename} 保存成功`);

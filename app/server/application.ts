@@ -8,8 +8,8 @@ export class Application {
         return this.common.post("/app/listing", body);
     }
 
-    del(...ids: Number[]): Observable<Object> {
-        return this.common.post("/app/del", { ids: ids });
+    del(id: Number): Observable<Object> {
+        return this.common.post("/app/remove", { id: id });
     }
 
     save(param: Object): Observable<Object> {
@@ -29,23 +29,23 @@ export class Application {
     }
 
     saveTask(body): Observable<Object> {
-        return this.common.post("/app/task.add", body);
+        return this.common.post("/task/add", body);
     }
 
     taskList(param: Object): Observable<Object> {
-        return this.common.post("/app/task.listing", param);
+        return this.common.post("/task/listing", param);
     }
 
     startRunTask(task_id: number): Observable<Object> {
-        return this.common.post("/app/task.startrun", { task_id: task_id });
+        return this.common.post("/task/startrun", { task_id: task_id });
     }
 
     endRunTask(task_id: number): Observable<Object> {
-        return this.common.post("/app/task.endrun", { task_id: task_id });
+        return this.common.post("/task/endrun", { task_id: task_id });
     }
 
     taskKeywords(param: Object): Observable<Object> {
-        return this.common.post("/app/task.keywords", param);
+        return this.common.post("/task/keywords", param);
     }
 
     keywordAdd(param: any): Observable<Object> {
@@ -60,4 +60,11 @@ export class Application {
         return this.common.post("/task/setsort", { task_id: task_id, value: value});
     }
 
+    setKeywordSort(id: number, value: number) {
+        return this.common.post("/task/setkeywordsort",{id:id,sort:value});
+    }
+
+    setKeywordQuant(id: number, value: number) {
+        return this.common.post("/task/setkeywordquant", { id: id, quant: value });
+    }
 }

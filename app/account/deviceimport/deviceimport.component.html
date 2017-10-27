@@ -6,6 +6,9 @@
             请对应导入数据的顺序，没有导入的字段会自动生成
         </div>
     </div>
+
+
+
     <div class="form-group">
         <div class="col-md-6" style="padding:0px;margin:0px;">
             <div *ngIf="types">
@@ -27,13 +30,11 @@
     </div>
 
     <div class="form-group">
-       
-    </div>
+        <label>选择要导入的文件</label>
+        <div><uploadbox [addr]="upload_dir" accept="text/*" (success)="onUpload($event)"></uploadbox></div>
 
-    <div class="form-group" style="height:35px;overflow:hidden;">
-        <p-fileUpload #fubauto mode="basic" [files]="[]" name="file" auto="true" [url]="upload_dir" accept="text/*" chooseLabel="选择要导入的文件" (onUpload)="onUpload($event)" [disabled]="disabledUpload" (onProgress)="onProgress($event)"></p-fileUpload>
-        <p *ngIf="progress">上传{{progress}}%</p>
     </div>
+  
 
     <div class="form-group">
         <textarea [(ngModel)]="remarks" placeholder="备注说明" class="form-control"></textarea>

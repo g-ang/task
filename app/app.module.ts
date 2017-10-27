@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AccountModule } from './account/account.module';
 import {ClitensModule} from './clients/clients.module';
+import {SettingModule} from './setting/setting.module';
 import {ApplicationModule} from './application/application.module';
 
 import { ConsoleComponent } from './console/console.component';
 import { LoginComponent } from './login/login.component';
 
-import {EnterModule} from  './common/enter/enter.module'
-
+import {EnterModule} from  './common/enter/enter.module';
+import {SelectButtonModule} from 'primeng/primeng';
 const routers: Routes = [
     {path: '', component: HomeComponent },
     {path: 'login', component: LoginComponent},
@@ -32,7 +33,10 @@ const routers: Routes = [
       AccountModule,
       ClitensModule,
       ApplicationModule,
-      EnterModule
+      EnterModule,
+      SelectButtonModule,
+      SettingModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],

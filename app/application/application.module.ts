@@ -17,6 +17,7 @@ import { AddtaskComponent } from './addtask/addtask.component';
 import { KeywordComponent } from './keyword/keyword.component';
 import { IndexComponent } from './index/index.component';
 
+import {EnterModule} from  '../common/enter/enter.module';
 const routers: Routes = [
     {
         path: 'app', component: ApplicationComponent, children: [
@@ -43,6 +44,7 @@ const routers: Routes = [
         AccountTypeModule,
         ListboxModule,
         InputSwitchModule,
+        EnterModule,
     ],
 
     declarations: [

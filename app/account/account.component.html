@@ -5,19 +5,18 @@
     </div>
     <div >
         <div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>客户端编号</label>
-                        <input type="text" class="form-control" placeholder="客户端编号" [(ngModel)]="filter.client_name">
-                    </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>客户端编号</label>
+                    <input type="text" class="form-control" placeholder="客户端编号" [(ngModel)]="filter.client_name">
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>帐号类型</label>
-                        <div><account-type [(ngModel)]="filter.account_type"></account-type></div>
-                    </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>帐号类型</label>
+                    <div><account-type [(ngModel)]="filter.account_type"></account-type></div>
                 </div>
-
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label>是否绑定设备信息</label>
@@ -40,17 +39,17 @@
                 </div>
             </div>
 
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <div><button (click)="listing()" class="btn btn-primary">搜索</button></div>
-                    </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div><button (click)="listing()" class="btn btn-primary">搜索</button></div>
                 </div>
             </div>
+        </div>
         
        <div class="col-md-12" >
            <div class="col-md-1" style="margin:0px;padding:0px;" >
-             <h3>客户端列表</h3>
+            
             <div style="overflow-y:auto;height:600px;">
                 <table class="table table-striped table-hover table-bordered">
                     <tbody>
@@ -62,11 +61,11 @@
             </div>
            </div>
            <div class="col-md-11">
-               <table class="table table-striped table-hover">
+               <table class="table table-striped table-hover table-bordered">
                    <thead>
                        <tr>
                            <th style="width:60px;">
-                               <input type="checkbox" title="All" (click)="selectAll()" />
+                               <input type="checkbox" title="All" (click)="selectAll($event)" [(ngModel)]="checked" />
                            </th>
                            <th style="width:60px;">ID</th>
                            <th style="width:60px;">客户端</th>
@@ -80,7 +79,7 @@
                            <th>ECID</th>
                            <th>SERIAL_NUM</th>
                            <th style="width:60px;">位置</th>
-                       </tr>
+                       </tr> 
                    </thead>
                    <tbody *ngIf="items">
                        <tr *ngFor="let item of items let index=index" style="cursor:pointer;">
@@ -103,8 +102,8 @@
                    </tbody>
                    <tfoot>
                        <tr>
-                           <td  *ngIf="total>0"><input type="checkbox" title="All" (click)="selectAll()" /> </td>
-                           <td colspan="30"  *ngIf="total>0"><div style="margin-top:-10px;"[page]="1" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
+                           <td  *ngIf="total>0"><input type="checkbox" title="All" (click)="selectAll($event)"  [(ngModel)]="checked" /> </td>
+                           <td colspan="30"  *ngIf="total>0"><div style="margin-top:-10px;"[page]="page" [rowcount]="limit" [total]="total" (callback)="listing($event)"></div></td>
                        </tr>
 
                        <tr  *ngIf="total==0" >

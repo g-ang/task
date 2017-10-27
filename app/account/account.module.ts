@@ -16,7 +16,7 @@ import {ImportComponent} from './import/import.component';
 import {ImportListingComponent} from './import/import.listing.component';
 import {DeviceimportComponent} from './deviceimport/deviceimport.component';
 import { DeviceComponent } from './device/device.component';
-
+import {UploadModule} from '../common/upload/upload.module';
 
 
 const routers: Routes = [{
@@ -26,7 +26,7 @@ const routers: Routes = [{
         {path: 'import', component: ImportComponent },
         {path: 'import.listing', component: ImportListingComponent },
         {path: 'device.import', component: DeviceimportComponent },
-        { path: 'device.listing/:account_ids', component: DeviceComponent }
+        {path: 'device.listing/:account_ids', component: DeviceComponent }
     ]
 }
 ]
@@ -52,7 +52,8 @@ const routers: Routes = [{
         CheckboxModule,
         SelectButtonModule,
         MultiSelectModule,
-        AccountTypeModule],
+        AccountTypeModule,
+        UploadModule],
     providers: [],
     exports: [RouterModule, ServerModule, CheckboxModule]
 })

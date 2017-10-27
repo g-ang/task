@@ -18,6 +18,7 @@ export class TaskComponent implements OnInit {
     items = [];
     useCount:any[];
     types: any[];
+    accountTypeOption:any;
     keywords: any[];
     curr_task: any;
     constructor(private server: Application,
@@ -44,6 +45,7 @@ export class TaskComponent implements OnInit {
         this.server.taskList(param).subscribe((re: any) => {
             if (re.isSucc) {
                 this.items = re.items;
+                
             }
         });
     }
@@ -52,6 +54,8 @@ export class TaskComponent implements OnInit {
         this.accountServer.getTypes().subscribe((re:any) => {
             if (re.isSucc) {
                 this.types = re.data;
+                this.accountTypeOption = [];
+                this.types.forEach(v => { this.accountTypeOption[v.id] = v.title; });
             }
         });
 
@@ -78,5 +82,40 @@ export class TaskComponent implements OnInit {
      
     endRun(t: any){
         this.server.endRunTask(t.task_id).subscribe(re => { t.status = 0; msg.succ(`${t.name} 已暂停`) });
+    }
+
+    updateKeywordQuant(e: any) {
+        let id = this.keywords[e.id].id;
+        e.value = parseInt(e.value);
+        if (e.value <= 0) {
+            msg.warn("请输入一个大于等于0的数字");
+            return;
+        }
+
+        this.server.setKeywordQuant(id, e.value).subscribe((res: any) => {
+            if (res.isSucc) {
+                msg.succ("修改成功");
+            } else {
+                msg.error(res.error_msg);
+                e.rollback();
+            }
+        });
+    }
+
+    updateKeywordSort(e: any){
+        let id = this.keywords[e.id].id;
+        e.value = parseInt(e.value);
+        if (e.value <= 0) {
+            msg.warn("请输入一个大于等于0的数字");
+            return;
+        }
+        this.server.setKeywordSort(id, e.value).subscribe((res: any) =>{
+            if (res.isSucc) {
+                msg.succ("修改成功");
+            } else {
+                msg.error(res.error_msg);
+                e.rollback();
+            }
+        });
     }
 }

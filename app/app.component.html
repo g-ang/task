@@ -5,6 +5,7 @@
                 <li  *ngFor="let menu of menus let index=index" [class.active]="menu.selected">
                     <a  [routerLink]="[menu.url]" (click)="onMenu(menu)">{{menu.title}}</a>
                 </li>
+                <li [class.active]="isOpenConsole"><button class="btn btn-sm btn-primary" style="margin-top:8px;margin-left:10px;" (click)="openConsole()">运行情况</button></li>
              </ul>
         </div>
     </div>
@@ -14,6 +15,8 @@
 <div style="position:fixed;z-index:2000;">
     <p-growl [(value)]="msg.msgs"></p-growl>
 </div>
+
+<console [hidden]="isOpenConsole == false"></console>
 <div>
     <router-outlet></router-outlet>
 </div>

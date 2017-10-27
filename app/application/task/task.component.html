@@ -35,16 +35,26 @@
             <thead>
                 <tr>
                     <th>任务名称</th>
+                    <th>账户类型</th>
+                    <th>完成统计</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="accountTypeOption">
                 <tr *ngFor="let t of items let index=index" (dblclick)="getKeywords(t)" style="cursor:pointer;">
-                    <td>{{t.name}} &nbsp;<i *ngIf="t.run_time>0" class="fa fa-clock-o" title="{{t.run_date}} 开始运行"></i></td>
+                    <td style="padding:0px 4px;margin:0px;"><div *ngIf="t.run_time>0" style="font-size:50%;padding:0px;margin:0px;">
+                        {{t.name}} &nbsp;
+                        <p style="color:red;padding:0px;margin:0px;"><i *ngIf="t.run_time>0" class="fa fa-clock-o" title="开始运行时间"></i> {{t.run_date}}</p>
+                      </div>
+                        <div *ngIf="t.run_time<=0">{{t.name}}</div>
+                    </td>
+                    <td>{{accountTypeOption[t.account_type]}}</td>
+                    <td>{{t.count_quant}}/{{t.count_complete_quant}}</td>
                     <td>{{t.start_date}}</td>
                     <td>{{t.end_date}}</td>
+                  
                     <td>
                         <button class="btn" *ngIf="t.status == 0" (click)="startRun(t)">开始</button>
                         <button class="btn btn-primary" *ngIf="t.status == 1" (click)="endRun(t)">暂停</button>
@@ -61,16 +71,17 @@
             <thead>
                 <tr>
                     <th>{{curr_task.name}} 的关键字列表</th>
-                    <th>总数/已完成</th>
-                    <th>顺序</th>
+                    <th style="text-align:right;">总数</th>
+                    <th style="text-align:right;">完成数</th>
+                    <th style="text-align:right;">顺序</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let k of keywords let index=index">
                     <td>{{k.keyword_name}}</td>
-                    <td>{{k.quant}}/{{k.complete_quant}}</td>
-                    <td>{{k.sort}}</td>
-                   
+                    <td style="text-align:right;width:90px;"><enter [val]="k.quant" [id]="index" (update)="updateKeywordQuant($event)"></enter></td>
+                    <td style="text-align:right;">{{k.complete_quant}}</td>
+                    <td style="text-align:right;width:90px;"><enter [val]="k.sort" [id]="index" (update)="updateKeywordSort($event)"></enter></td>
                 </tr>
             </tbody>
         </table>

@@ -13,7 +13,18 @@ export var msg = new Msg();
 
 export function WsConn(): Ws {
     if (ws == undefined || ws.isOpen == false) {
-        ws = new Ws("127.0.0.1", 0);
+        if (isLocalhost()) {
+            ws = new Ws("127.0.0.1", 0);
+        } else {
+            ws = new Ws("120.76.158.16",5);
+        }
     }
     return ws;
+}
+
+export function isLocalhost(): boolean{
+    if (window.location.href.indexOf("http://g.com") > -1) {
+        return true;
+    }
+    return false;
 }

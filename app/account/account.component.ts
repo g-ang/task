@@ -18,7 +18,10 @@ export class AccountComponent implements OnInit {
     limit = 10;
     total = 0;
     items = [];
+    page = 1;
     bind_client_name: string;
+
+    checked: boolean;
 
     consoleHeight = 40;
 
@@ -66,6 +69,7 @@ export class AccountComponent implements OnInit {
  client_acctions(c:any) {
      this.filter['client_id'] = c.id
      this.filter.client_name = c.name;
+     this.page = 1;
      this.listing();
  }
 
@@ -76,10 +80,12 @@ export class AccountComponent implements OnInit {
      this.router.navigateByUrl(this.curr_url);
  }
 //全选
- selectAll() {
-     this.items.forEach(t => {
-         t.checked = true;
-     })
+ selectAll(e: any) {
+    
+        this.items.forEach(t => {
+            t.checked = !this.checked;
+        })
+    
  }
 
 //绑定客户端
@@ -134,6 +140,7 @@ export class AccountComponent implements OnInit {
      if (page != undefined) {
          this.offset = page.offset;
          this.limit = page.rowcount;
+         this.page = page.page;
      }
      let param = { offset: this.offset, limit: this.limit, filter: this.filter, sort: 'account_id'}
 
