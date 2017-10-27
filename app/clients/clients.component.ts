@@ -57,6 +57,11 @@ export class ClientsComponent implements OnInit {
         })
     }
 
+    reGetGroups() {
+        this.getGroups();
+        msg.succ("刷新成功");
+    }
+
     selectGroup(g: any) {
         this.filter.group_id = g.id;
         this.listing();
@@ -185,6 +190,9 @@ export class ClientsComponent implements OnInit {
     accounts(cli:any){}
 
     del(index: number, cli: any) {
+        if (confirm(`确定要删除 ${cli.name}?`) == false) {
+            return;
+        }
         this.server.del(cli.id).subscribe(re => { this.items.splice(index, 1); msg.succ(`${cli.name} 删除成功`); });
     }
 

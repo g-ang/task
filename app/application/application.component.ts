@@ -19,7 +19,7 @@ export class ApplicationComponent implements OnInit {
 
     curr_app: any;
 
-    consoleHeight = 4;
+    consoleHeight =0;
 
     setConsoleHeight(n: any) {
         this.consoleHeight = n;

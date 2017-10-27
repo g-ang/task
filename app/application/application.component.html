@@ -53,7 +53,7 @@
                     <td>
                         <button class="btn btn-primary" (click)="addtask(app)" routerLinkActive="active">添加任务</button>
                         <button class="btn btn-primary" (click)="addkeyword(app)" routerLinkActive="active">添加关键字</button>
-                        &nbsp;<button class="btn" (click)="del(index,app)">删除</button>
+                        <button class="btn btn-danger" (click)="del(index,app)">删除</button>
                     </td>
 
                 </tr>
@@ -71,7 +71,7 @@
         <ul>
             <li *ngIf="curr_app">{{curr_app.appname}}</li>
             <li class="pull-right">
-                <span (click)="setConsoleHeight(4)" class="lat"><a href="javascript:void(0);">关闭</a></span>
+                <span (click)="setConsoleHeight(0)" class="lat"><a href="javascript:void(0);">关闭</a></span>
                 <span (click)="setConsoleHeight(40)" class="lat" [class.now]="consoleHeight==40">A</span>
                 <span (click)="setConsoleHeight(60)" class="lat" [class.now]="consoleHeight==60">B</span>
                 <span (click)="setConsoleHeight(100)" class="lat" [class.now]="consoleHeight==100">C</span>

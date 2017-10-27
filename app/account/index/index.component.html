@@ -9,8 +9,8 @@
                 <th style="text-align:right;width:120px;">被锁帐号</th>
                 <th style="text-align:right;width:120px;">密码错误</th>
                 <th style="text-align:right;width:120px;">缓存总数/未绑定</th>
-            
-                <th style="text-align:right;"></th>
+                <th style="width:320px;"><button class="btn btn-primary" (click)="reload()">刷新</button></th>
+                <th></th>
             </tr>
         </thead>
 
@@ -23,8 +23,8 @@
                 <td>{{counts[t.id]['4']}}</td>
                 <td>{{counts[t.id]['5']}}</td>
                 <td>{{counts[t.id]['cache_total']}}/{{counts[t.id]['unbind_total']}}</td>
-                <td><button (click)="upCache(t.id)" class="btn">更新缓存</button>  &nbsp; <button (click)="delAccount(t.id)" class="btn">删除该分类下的所有帐号</button></td>
-              
+                <td><button (click)="upCache(t.id)" class="btn btn-primary">更新缓存</button>  &nbsp; <button (click)="delAccount(t.id)" class="btn btn-danger">删除该分类下的所有帐号</button></td>
+               <th></th>
             </tr>
         </tbody>
     </table>

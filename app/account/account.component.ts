@@ -5,6 +5,15 @@ import {Router} from '@angular/router';
 import { ServerModule } from './../server/server.module';
 import { Page, msg} from './../common/common';
 
+class Filter {
+    status=2;
+    account_type = -1;
+    client_name = '';
+    account_name = '';
+    is_bind_device = 0;
+    is_bind_client = 0;
+}
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -25,13 +34,8 @@ export class AccountComponent implements OnInit {
 
     consoleHeight = 40;
 
-    filter = {
-        status: 2, account_type: -1,
-        client_name: '',
-        account_name: '',
-        is_bind_device:0,
-        is_bind_client:0,
-    }
+    filter = new Filter();
+
     statuss = { 2: '正常', 4: '已锁定', 5: '密码错误' };
 
     bind_statuss = [{ id: 0,title: '所有' }, { id: 1, title: '已绑定' }, { id: 2, title: '未绑定' }];
@@ -67,7 +71,6 @@ export class AccountComponent implements OnInit {
     }
 
  client_acctions(c:any) {
-     this.filter['client_id'] = c.id
      this.filter.client_name = c.name;
      this.page = 1;
      this.listing();
@@ -152,6 +155,11 @@ export class AccountComponent implements OnInit {
             msg.error(re.error_msg);
         }
      })
+ }
+
+ reset() {
+     this.filter = new Filter();
+     this.listing();
  }
 
  unbindclient() {

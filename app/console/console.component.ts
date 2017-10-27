@@ -46,7 +46,7 @@ export class ConsoleComponent implements OnInit {
 
     reload() {
         this.listing();
-        msg.succ("刷新成功");
+        msg.succ("刷新帐号类型成功");
     }
     ngOnInit() {
         this.listing();

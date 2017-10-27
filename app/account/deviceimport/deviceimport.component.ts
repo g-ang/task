@@ -43,12 +43,14 @@ export class DeviceimportComponent implements OnInit {
             { label: 'SerialNumber', value: 'serial_num' },
             { label: 'IMEI', value: 'imei' },
             { label: "ECID", value: 'ecid' },
-            { label: 'ICCID', value: 'iccid'},
-            { label: '蓝牙地址', value: 'btaddr' },
-            { label: 'Wifi地址', value: 'macaddr' },
-            { label: '机型', value: 'model_number' },
-            { label: '硬件版本号', value: 'hardware_version' },
-            { label: '小网卡地址', value: 'router_macaddr' },
+            { label: 'ICCID', value: 'iccid' },
+            { label: 'MLB', value: 'mlb'},
+            { label: '蓝牙地址(btaddr)', value: 'btaddr' },
+            { label: 'Wifi地址(macaddr)', value: 'macaddr' },
+            { label: '机型(model_number)', value: 'model_number'},
+            { label: '硬件版本号(hardware_version)', value: 'hardware_version' },
+            { label: '小网卡地址(router_macaddr)', value: 'router_macaddr' },
+
         ];
     }
 
